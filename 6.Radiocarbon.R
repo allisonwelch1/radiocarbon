@@ -28,7 +28,7 @@ keel <- keel %>% rename(Inverse_TC = `1/TC`) #skip this - go to line 24
 #prelim plot
 ggplot(data = keel, aes(x = Inverse_TC, y = Del14C.corr)) +
   geom_point() +
-  labs(title = "Keeling Plot from Toolik Filters",
+  labs(title = "Keeling Plot --",
        x = bquote(1/TC~(1/µg~m^-3)),
        y = bquote(paste("∆"^14, "C (‰)"))
     ) +
@@ -123,7 +123,7 @@ ggplot()+
   geom_abline(slope = mod_coefs[[ 9 ]]$Slope, intercept = mod_coefs[[ 9 ]]$Intercept, color = palette[[ 9 ]]) +
   geom_abline(slope = mod_coefs[[ 10 ]]$Slope, intercept = mod_coefs[[ 10 ]]$Intercept, color = palette[[ 10 ]]) +
   annotate("text", x = max(keel$Inverse_TC)*0.75, y = max(keel$Del14C.corr)*0.75, label = my_annotation, size = 5) + #add linear regression to plot
-  labs(title = "Keeling Plot from Toolik Filters",
+  labs(title = "Keeling Plot --",
        x = bquote(1/TC~(1/µg~m^-3)),
        y = bquote(paste("∆"^14, "C (‰)"))
   ) +
@@ -132,63 +132,14 @@ ggplot()+
   theme(legend.position = "none",
         panel.grid = element_line(color = "gray95"))
 
-# ggsave("Toolik Keeling Plot.png", height = 6, width = 6, dpi = 500)
+# ggsave("__Keeling Plot.png", height = 6, width = 6, dpi = 500)
 
 
 
 
 
 #Code graveyard
-# keeling plot and radiocarbon over depth
-# {
-#   #import data
-#   {
-#     radioc <- data.table(openxlsx::read.xlsx("Data/RadioCarbon/Summary14C.xlsx"))
-#     radioc[,Top:=as.numeric(Top)]
-#     radioc[,Bottom:=as.numeric(Bottom)]
-#     radioc[,reverseC:=1/C/10]
-#   }
-#   # type II linear fit (lmodel2)
-#   {
-#     DMK<-lmodel2(DEL.14C~reverseC,data=radioc[SeedSource!="Control"],nperm=0)
-#     DCK<-lmodel2(DEL.14C~reverseC,data=radioc[SeedSource=="Control"],nperm=0)
-#     FMK<-lmodel2(FRACT.~reverseC,data=radioc[SeedSource!="Control"],nperm=0)
-#     FCK<-lmodel2(FRACT.~reverseC,data=radioc[SeedSource=="Control"],nperm=0)
-#     DMK13<-lmodel2(DEL.14C~d13C,data=radioc[SeedSource!="Control"],nperm=0)
-#     DCK13<-lmodel2(DEL.14C~d13C,data=radioc[SeedSource=="Control"],nperm=0)
-#     #FMK$regression.results$Intercept[[3]]
-#     #FCK$regression.results$Slope[[3]]
-#     plot(DCK13,"SMA")
-#   }
-#   
-#   #14C vs 13C
-#   {
-#     radiod13 <- ggplot(radioc,aes(x=d13C,color=Condition))+
-#       geom_errorbar(aes(ymax=DEL.14C+DEL.14CE,ymin=DEL.14C-DEL.14CE,x=d13C),linewidth=0.2)+
-#       geom_abline(aes(intercept=DMK13$regression.results$Intercept[[3]],slope=DMK13$regression.results$Slope[[3]],color="A Coastal"))+
-#       geom_abline(aes(intercept=DMK13$confidence.intervals$`97.5%-Intercept`[[3]],slope=DMK13$confidence.intervals$`97.5%-Slope`[[3]],color="A Coastal"),linewidth=0.2)+
-#       geom_abline(aes(intercept=DMK13$confidence.intervals$`2.5%-Intercept`[[3]],slope=DMK13$confidence.intervals$`2.5%-Slope`[[3]],color="A Coastal"),linewidth=0.2)+
-#       geom_abline(aes(intercept=DCK13$regression.results$Intercept[[3]],slope=DCK13$regression.results$Slope[[3]],color="A Control"))+
-#       geom_abline(aes(intercept=DCK13$confidence.intervals$`97.5%-Intercept`[[3]],slope=DCK13$confidence.intervals$`97.5%-Slope`[[3]],color="A Control"),linewidth=0.2)+
-#       geom_abline(aes(intercept=DCK13$confidence.intervals$`2.5%-Intercept`[[3]],slope=DCK13$confidence.intervals$`2.5%-Slope`[[3]],color="A Control"),linewidth=0.2)+
-#       #scale_y_continuous(n.breaks=6,limits=c(-175,125),expand=c(0,0))+
-#       #scale_x_continuous(limits=c(0,0.12),expand=c(0,0))+
-#       geom_point(aes(x=d13C,y=DEL.14C),size=1)+
-#       labs(x="d13C",y="DEL 14C",color=NULL)+
-#       theme_bw()+
-#       guides(fill=guide_legend(title='MY NEW TITLE'))+
-#       theme(#legend.position = "none",
-#         legend.position=c(0.7,0.6),
-#         legend.justification=c(0,0),
-#         plot.margin=margin(r=10,t=10),
-#         legend.background=element_rect(fill="transparent"),
-#         legend.key=element_rect(fill="transparent"),
-#         axis.title.x.bottom=element_text(face="bold"),
-#         axis.title.y.left=element_text(face="bold"),
-#         legend.title=element_text(face="bold"))
-#     radiod13
-#     ggsave("DEL14 d13 keeling.png",radiod13,width=4,height=4,dpi=400,path="Plots/14C")
-
+# 
 #figuring out lmodel2 loop
 # colnames(mod_summary) <- colnames(mod_y)
 # 
